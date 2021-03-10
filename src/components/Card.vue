@@ -8,7 +8,7 @@
           <p mov data-load="2" :class="{txt: txtActive}">{{ q.question }}</p>
           <img :src="`/img/${q.img}`" alt="" :class="{txt: txtActive}" mov data-load="3">
           <label v-for="(e, i) in q.examples" :key="i">
-            {{ i + 1 }}. <input type="radio" :value="i + 1" v-model="answer[step]"> {{ e }}
+            {{ i + 1 }}. <input type="checkbox" :value="i + 1" v-model="answer[step]"> {{ e }}
           </label>
           <a @click="que">다음</a>
         </div>
@@ -50,14 +50,13 @@ export default {
     },
     txtLoad: function() {
       this.txtActive = !this.txtActive;
-      console.log(this.month, this.step)
     },
     que: function() {
       if (!this.answer[this.step] || this.answer[this.step].length === 0) {
         alert('메롱');
         return;
       }
-      this.step += 1;
+      this.step = this.answer[0];
     }
   },
   mounted() {
@@ -66,7 +65,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   [card] {
     section { position: relative;}
     .img { display: block; height: 100vh; background-size: cover; background-image: url("/img/img.png"); background-position: right 100% top 100%; transition: 3s; transition-delay: 0.5s; position: relative; }
