@@ -5,12 +5,13 @@
         <span class="img" :class="{imgMove: imgMove}"></span>
         <div class="visual">
           <h1 mov data-load="1" :class="{txt: txtActive}">{{ q.title }}</h1>
-          <p mov data-load="2" :class="{txt: txtActive}">{{ q.question }}</p>
-          <img :src="`/img/${q.img}`" alt="" :class="{txt: txtActive}" mov data-load="3">
-          <label v-for="(e, i) in q.examples" :key="i">
-            {{ i + 1 }}. <input type="checkbox" :value="i + 1" v-model="answer[step]"> {{ e }}
+          <p mov data-load="2" :class="{txt: txtActive}">{{ q.subTitle }}</p>
+          <p mov data-load="3" :class="{txt: txtActive}">{{ q.question }}</p>
+          <img :src="`/img/${q.img}`" alt="" :class="{txt: txtActive}" mov data-load="4">
+          <label mov data-load="5" v-for="(e, i) in q.examples" :key="i" :class="{txt: txtActive}">
+            {{ i + 1 }}. <input :type="`${ q.type }`" :value="i + 1" v-model="answer[step]"> {{ e }}
           </label>
-          <a @click="que">다음</a>
+          <a @click="que" mov data-load="6" :class="{txt: txtActive}">다음</a>
         </div>
       </section>
     </transition>
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import CardData from '@/data/card';
+import QueData from '@/data/queBoard';
 
 export default {
   name: "Card",
@@ -40,8 +41,8 @@ export default {
       return this.$route.params.month;
     },
     q() {
-      return CardData[this.month][this.step];
-    }
+      return QueData[this.month][this.step];
+    },
   },
   methods: {
     imgMoving: function() {
@@ -56,7 +57,12 @@ export default {
         alert('메롱');
         return;
       }
-      this.step = this.answer[0];
+      // this.step += 1;
+      if (this.q.connect === false) {
+        this.step = this.answer[0];
+      } else {
+        this.step += 1;
+      }
     }
   },
   mounted() {
