@@ -1,18 +1,17 @@
 export default {
-  4: [
-    {
+  4: {
+    q1: {
       title: '고혈압 관리 행동 양식 및 텔미트렌 20 mg 처방 경험에 관한 설문',
       subTitle: 'Part 1. 고혈압 환자 관리 행동 양식 조사 (1)',
       question: '생전 처음으로 고혈압을 진단받은 다음과 같은 환자의 혈압 관리를 위해 선생님께서는 가장 먼저 어떤 방식을 선택하시겠습니까?',
       img: 'img1.png',
       examples: [
-        '즉시 혈압강하제 처방을 고려한다',
-        '식이 및 운동요법 등 생활습관개선을 우선 권고한다'
+        {next: 'q2', label: '즉시 혈압강하제 처방을 고려한다'},
+        {next: 'q3', label: '식이 및 운동요법 등 생활습관개선을 우선 권고한다'}
       ],
-      connect: false,
       type: 'radio',
     },
-    {
+    q2: {
       title: '',
       subTitle: 'Part 1. 고혈압 환자 관리 행동 양식 조사 (2)',
       question: '즉시 혈압강하제 처방을 고려하시게 된 이유는 무엇입니까? (복수 선택 가능)',
@@ -23,10 +22,10 @@ export default {
         '직업 상 규칙적인 생활습관개선이 여의치 않아서',
         '기타',
       ],
-      connect: true,
+      next: 'q4',
       type: 'checkbox',
     },
-    {
+    q3: {
       title: '',
       subTitle: 'Part 1. 고혈압 환자 관리 행동 양식 조사 (2)',
       question: '생활습관개선을 우선 권고하시게 된 이유는 무엇입니까? (복수 선택 가능)',
@@ -37,22 +36,21 @@ export default {
         '환자가 복용하기 간편한 혈압강하제가 마땅치 않아서',
         '기타',
       ],
-      connect: true,
+      next: 'q4',
       type: 'checkbox',
     },
-    {
+    q4: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (1)',
       question: '선생님께서는 텔미트렌 20mg을 처방해보신 경험이 있으신지요?',
       img: '',
       examples: [
-        '있다',
-        '없다'
+        {next: 'q5', label: '있다'},
+        {next: 'q10', label: '없다'}
       ],
-      connect: false,
       type: 'radio',
     },
-    {
+    q5: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (1)',
       question: '1. 텔미트렌 20mg은 어떤 환자에게 처방하셨습니까? (복수 선택 가능)',
@@ -60,16 +58,16 @@ export default {
       examples: [
         '처음 고혈압으로 진단된 환자에게 단독 처방',
         '처음 고혈압으로 진단된 환자에게 다른 계열 혈압강하제와 병용 처방',
-        '기존ARB(텔미살탄제제포함)를처방받고있던환자에게교체처방',
+        {next: 'q6', label: '기존ARB(텔미살탄제제포함)를처방받고있던환자에게교체처방'},
         '기존 다른 계열 혈압강하제를 처방받고 있던 환자에게 교체 처방',
         '동반질환 (당뇨병, 고지혈증 등) 이 있는 고혈압 환자에게 단독 처방',
         '동반질환 (당뇨병, 고지혈증 등) 이 있는 고혈압 환자에게 병용 처방',
         '기타',
       ],
-      connect: false,
+      next: 'q7',
       type: 'checkbox',
     },
-    {
+    q6: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (2)',
       question: '1-1. 텔미트렌 20mg은 어떤 ARB 제제를 대신하여 처방하셨습니까? (복수 선택 가능)',
@@ -85,10 +83,10 @@ export default {
         '피마사르탄 (fimasartan; 카나브 등) 제제',
         '아질사르탄 (azilsartan; 이달비) 제제',
       ],
-      connect: false,
+      next: 'q7',
       type: 'checkbox',
     },
-    {
+    q7: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (3)',
       question: '2. 텔미트렌 20mg의 혈압 강하 효과에 대해 어떻게 생각하십니까?',
@@ -97,13 +95,13 @@ export default {
         '매우 충분하다',
         '충분하다',
         '보통이다',
-        '부족하다',
-        '매우 부족하다',
+        {next: 'q8', label: '부족하다'},
+        {next: 'q8', label: '매우 부족하다'},
       ],
-      connect: false,
+      connect: 6,
       type: 'radio',
     },
-    {
+    q8: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (3)',
       question: '2-1. 텔미트렌 20mg의 혈압 강하 효과가 부족했을 때 어떻게 대응하셨습니까? (복수 선택 가능)',
@@ -117,10 +115,10 @@ export default {
         '텔미트렌 20mg 대신 다른 ARB 성분이 포함된 복합제 처방',
         '텔미트렌 20mg 대신 타 계열 혈압강하제 단일제제 또는 복합제 처방',
       ],
-      connect: false,
+      next: 'q9',
       type: 'checkbox',
     },
-    {
+    q9: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (4)',
       question: '3. 기존 텔미사르탄 제제와 비교하여 텔미트렌 20mg의 장점은 무엇이라고 생 각하십니까?',
@@ -132,10 +130,9 @@ export default {
         '신뢰할수있는회사제품',
         '기타',
       ],
-      connect: false,
       type: 'radio',
     },
-    {
+    q10: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (5)',
       question: '1. 텔미트렌 20mg을 처방해 본 경험이 없으신 이유는 무엇입니까? (복수 선택 가능)',
@@ -147,10 +144,10 @@ export default {
         '텔미사르탄의 1일 처방 권고 용량은 40mg 이므로',
         '기타',
       ],
-      connect: false,
+      next: 'q11',
       type: 'checkbox',
     },
-    {
+    q11: {
       title: '',
       subTitle: 'Part 2. 텔미트렌 20mg 처방 경험 조사 (5)',
       question: '2. 향후 텔미트렌 20mg을 처방해보실 의향이 있으신지요?',
@@ -160,8 +157,7 @@ export default {
         '없다',
         '잘 모르겠다',
       ],
-      connect: false,
       type: 'radio',
     },
-  ]
+  }
 }

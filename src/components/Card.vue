@@ -9,8 +9,9 @@
           <p mov data-load="3" :class="{txt: txtActive}">{{ q.question }}</p>
           <img :src="`/img/${q.img}`" alt="" :class="{txt: txtActive}" mov data-load="4">
           <label mov data-load="5" v-for="(e, i) in q.examples" :key="i" :class="{txt: txtActive}">
-            {{ i + 1 }}. <input :type="`${ q.type }`" :value="i + 1" v-model="answer[step]"> {{ e }}
+            {{ i + 1 }}. <input :type="`${ q.type }`" :value="i + 1" v-model="answer[step]"> {{ e.label || e }}
           </label>
+          <a @click="prev" mov data-load="6" :class="{txt: txtActive}" v-if="step !== 'q1'">이전</a>
           <a @click="que" mov data-load="6" :class="{txt: txtActive}">다음</a>
         </div>
       </section>
@@ -27,8 +28,9 @@ export default {
     return {
       imgMove: false,
       txtActive: false,
-      step: 0,
-      answer: [[]],
+      step: 'q1',
+      answer: {},
+      history: [],
     }
   },
   watch: {
@@ -45,24 +47,38 @@ export default {
     },
   },
   methods: {
-    imgMoving: function() {
+    imgMoving() {
       this.imgMove = !this.imgMove;
       this.txtLoad();
     },
-    txtLoad: function() {
+    txtLoad() {
       this.txtActive = !this.txtActive;
     },
-    que: function() {
+    getNext() {
+      console.log(this.answer[this.step])
+      const answer = this.answer[this.step];
+      if (!answer) return null;
+      const n = typeof answer === 'number'
+                ? this.q.examples[answer - 1].next
+                : answer.map(n => this.q.examples[n - 1].next).find(x => x)
+      if (n) return n;
+      if (!this.q.next) this.msg();
+      return this.q.next;
+    },
+    msg() {
+      alert('끝');
+      return false;
+    },
+    prev() {
+      this.step = this.history.pop();
+    },
+    que() {
       if (!this.answer[this.step] || this.answer[this.step].length === 0) {
-        alert('메롱');
+        alert('답변을 선택해주세요');
         return;
       }
-      // this.step += 1;
-      if (this.q.connect === false) {
-        this.step = this.answer[0];
-      } else {
-        this.step += 1;
-      }
+      this.history.push(this.step);
+      this.step = this.getNext();
     }
   },
   mounted() {
