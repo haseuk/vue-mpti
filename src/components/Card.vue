@@ -1,5 +1,6 @@
 <template>
   <div card>
+    <Header :bar="bar"></Header>
     <transition name="fade">
       <section>
         <span class="img" :class="{imgMove: imgMove}"></span>
@@ -21,9 +22,11 @@
 
 <script>
 import QueData from '@/data/queBoard';
+import Header from "@/components/Header";
 
 export default {
   name: "Card",
+  components: {Header},
   data() {
     return {
       imgMove: false,
@@ -31,6 +34,7 @@ export default {
       step: 'q1',
       answer: {},
       history: [],
+      bar: [],
     }
   },
   watch: {
@@ -45,6 +49,9 @@ export default {
     q() {
       return QueData[this.month][this.step];
     },
+    queLength() {
+      return QueData[this.month];
+    }
   },
   methods: {
     imgMoving() {
@@ -79,10 +86,11 @@ export default {
       }
       this.history.push(this.step);
       this.step = this.getNext();
-    }
+    },
   },
   mounted() {
     this.imgMoving();
+    this.bar = Object.keys(this.queLength).length;
   }
 }
 </script>
