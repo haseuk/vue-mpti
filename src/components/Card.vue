@@ -1,6 +1,6 @@
 <template>
   <div card>
-    <Header :bar="bar"></Header>
+    <Header :props1="bar" :props2="step"></Header>
     <transition name="fade">
       <section>
         <span class="img" :class="{imgMove: imgMove}"></span>
@@ -62,7 +62,6 @@ export default {
       this.txtActive = !this.txtActive;
     },
     getNext() {
-      console.log(this.answer[this.step])
       const answer = this.answer[this.step];
       if (!answer) return null;
       const n = typeof answer === 'number'
