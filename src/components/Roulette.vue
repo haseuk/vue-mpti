@@ -53,8 +53,6 @@ export default {
   data() {
     return {
       options: ['꽝','1000','2000','3000','4000','5000','10','10000'],
-      // new_option: '',
-
       startAngle: 0,
       startAngleStart: 0,
       spinTimeout: null,
@@ -75,7 +73,7 @@ export default {
 
   methods: {
     byte2Hex: function (n) {
-      var nybHexString = "0123456789ABCDEF";
+      let nybHexString = "0123456789ABCDEF";
       return String(nybHexString.substr((n >> 4) & 0x0F,1)) + nybHexString.substr(n & 0x0F,1);
     },
 
@@ -84,10 +82,10 @@ export default {
     },
 
     getColor: function (item, maxitem) {
-      var phase = 0;
-      var center = 128;
-      var width = 127;
-      var frequency = Math.PI*2/maxitem;
+      let phase = 0;
+      let center = 128;
+      let width = 127;
+      let frequency = Math.PI*2/maxitem;
 
       const RED   = Math.sin(frequency*item+2+phase) * width + center;
       const GRN = Math.sin(frequency*item+0+phase) * width + center;
@@ -96,23 +94,12 @@ export default {
       return this.RGB2Color(RED,GRN,BLU);
     },
 
-    // addOptions: function () {
-    //   this.options.push(this.new_option);
-    //   this.new_option = '';
-    //   this.drawRouletteWheel()
-    // },
-    // removeOptions: function (option) {
-    //   let idx = this.options.indexOf(option) || 0;
-    //   this.options.splice(idx, 1);
-    //   this.drawRouletteWheel()
-    // },
-
     drawRouletteWheel: function () {
-      var canvas = document.getElementById("canvas");
+      let canvas = document.getElementById("canvas");
       if (canvas.getContext) {
-        var outsideRadius = 200;
-        var textRadius = 160;
-        var insideRadius = 125;
+        let outsideRadius = 200;
+        let textRadius = 160;
+        let insideRadius = 125;
 
         this.ctx = canvas.getContext("2d");
         this.ctx.clearRect(0,0,500,500);
@@ -122,9 +109,8 @@ export default {
 
         this.ctx.font = 'bold 12px Helvetica, Arial';
 
-        for(var i = 0; i < this.options.length; i++) {
-          var angle = this.startAngle + i * this.arc;
-          //this.ctx.fillStyle = colors[i];
+        for(let i = 0; i < this.options.length; i++) {
+          let angle = this.startAngle + i * this.arc;
           this.ctx.fillStyle = this.getColor(i, this.options.length);
 
           this.ctx.beginPath();
@@ -142,7 +128,7 @@ export default {
           this.ctx.translate(250 + Math.cos(angle + this.arc / 2) * textRadius,
               250 + Math.sin(angle + this.arc / 2) * textRadius);
           this.ctx.rotate(angle + this.arc / 2 + Math.PI / 2);
-          var text = this.options[i];
+          let text = this.options[i];
           this.ctx.fillText(text, -this.ctx.measureText(text).width / 2, 0);
           this.ctx.restore();
         }
@@ -175,7 +161,7 @@ export default {
         this.stopRotateWheel();
         return;
       }
-      var spinAngle = this.spinAngleStart - this.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
+      let spinAngle = this.spinAngleStart - this.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
       this.startAngle += (spinAngle * Math.PI / 180);
       this.drawRouletteWheel();
 
@@ -187,20 +173,20 @@ export default {
 
     stopRotateWheel: function () {
       clearTimeout(this.spinTimeout);
-      var degrees = this.startAngle * 180 / Math.PI + 90;
-      var arcd = this.arc * 180 / Math.PI;
-      var index = Math.floor((360 - degrees % 360) / arcd);
+      let degrees = this.startAngle * 180 / Math.PI + 90;
+      let arcd = this.arc * 180 / Math.PI;
+      let index = Math.floor((360 - degrees % 360) / arcd);
       this.ctx.save();
       this.ctx.font = 'bold 30px Helvetica, Arial';
-      var text = this.options[index]
+      let text = this.options[index]
       console.log(index, text, this.options, this.arc)
       this.ctx.fillText(text, 250 - this.ctx.measureText(text).width / 2, 250 + 10);
       this.ctx.restore();
     },
 
     easeOut: function (t, b, c, d) {
-      var ts = (t/=d)*t;
-      var tc = ts*t;
+      let ts = (t/=d)*t;
+      let tc = ts*t;
       return b+c*(tc + -3*ts + 3*t);
     }
   },

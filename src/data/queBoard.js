@@ -98,7 +98,6 @@ export default {
         {next: 'q8', label: '부족하다'},
         {next: 'q8', label: '매우 부족하다'},
       ],
-      connect: 6,
       type: 'radio',
     },
     q8: {
@@ -130,6 +129,7 @@ export default {
         '신뢰할수있는회사제품',
         '기타',
       ],
+      next: 'roulette',
       type: 'radio',
     },
     q10: {
@@ -157,6 +157,7 @@ export default {
         '없다',
         '잘 모르겠다',
       ],
+      next: 'roulette',
       type: 'radio',
     },
   }

@@ -13,7 +13,8 @@
             {{ i + 1 }}. <input :type="`${ q.type }`" :value="i + 1" v-model="answer[step]"> {{ e.label || e }}
           </label>
           <a @click="prev" mov data-load="6" :class="{txt: txtActive}" v-if="step !== 'q1'">이전</a>
-          <a @click="que" mov data-load="6" :class="{txt: txtActive}">다음</a>
+          <router-link to="/roulette" v-if="this.q.next === 'roulette'">확인</router-link>
+          <a @click="que" mov data-load="6" :class="{txt: txtActive}" v-else>다음</a>
         </div>
       </section>
     </transition>
@@ -68,7 +69,7 @@ export default {
                 ? this.q.examples[answer - 1].next
                 : answer.map(n => this.q.examples[n - 1].next).find(x => x)
       if (n) return n;
-      if (!this.q.next) this.msg();
+      if (this.q.next === 'roulette') this.msg();
       return this.q.next;
     },
     msg() {

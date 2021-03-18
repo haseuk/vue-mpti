@@ -16,22 +16,26 @@
           알고 계신 코드를 입력해 주세요*
         </p>
         <label>
-          코드 <input type="text" v-model="code"> <a @click="submit">확인</a>
+          코드 <input type="text" v-model="usercode">
+          의사명 <input type="text" v-model="username"> <a @click="submit">확인</a>
         </label>
         <p>만약 알고 계신 코드가 없다면 <a @click="next">이동</a> 버튼을 클릭해주세요*</p>
       </section>
       <section v-else-if="page === 3" :key="3">
         <p> 테스트 진행을 위해 아래 정보를 입력해 주세요*</p>
         <label>
-          병원명 <input type="text" v-model="hospital">
+          병원명 <input type="text" v-model="usercode">
         </label>
         <label>
-          성 함 <input type="text" v-model="name">
+          과명 <input type="text" v-model="department">
+        </label>
+        <label>
+          성 함 <input type="text" v-model="username">
         </label>
         <a @click="form">다음</a>
       </section>
       <section v-else-if="page === 4" :key="4">
-        <p>{{ this.hospital }}병원(의원) {{ this.name }}선생님 안녕하세요?<br> 테스트를 시작하겠습니다*</p>
+        <p>{{ this.usercode }}병원(의원) {{ this.username }}선생님 안녕하세요?<br> 테스트를 시작하겠습니다*</p>
         <router-link to="cardSelect">시작</router-link>
       </section>
     </transition>
@@ -39,15 +43,24 @@
 </template>
 
 <script>
+import Code from '@/data/code';
+
 export default {
   name: "Intro",
 
   data() {
     return {
       page: 2,
-      code: '',
-      hospital: '',
-      name: '',
+      usercode: '',
+      username: '',
+      department: '',
+      dbcode: '1234',
+      dbname: '1234',
+    }
+  },
+  computed: {
+    codeArr() {
+      return Code;
     }
   },
   methods: {
@@ -55,11 +68,12 @@ export default {
       this.page += 1;
     },
     submit: function() {
-      if(!this.code) {
-        alert('코드 번호를 입력하세요.')
+      if(!this.usercode || !this.username) {
+        alert('코드 및 성함을 입력하세요.')
+      } else if((this.dbcode !== this.usercode) || (this.dbname !== this.username)) {
+        alert('입력하신 코드 및 의사가 없습니다. 확인 후 입력하세요');
       } else {
-        alert('코드 번호를 확인했습니다.')
-        this.next();
+        this.page = 4;
       }
     },
     form: function() {
@@ -74,6 +88,9 @@ export default {
       this.hospital = this.hospital.replace('병원','');
       this.hospital = this.hospital.replace('의원','');
     }
+  },
+  mounted() {
+    console.log(this.codeArr.code);
   }
 }
 </script>
